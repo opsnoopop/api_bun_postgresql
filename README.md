@@ -46,7 +46,6 @@ CREATE TABLE IF NOT EXISTS public.users (
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 '"
-"
 ```
 
 
