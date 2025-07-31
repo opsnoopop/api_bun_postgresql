@@ -1,0 +1,53 @@
+services:
+  bun:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: oven/bun:1_alpine_custom
+    container_name: container_bun
+    ports:
+      - "3001:3000"
+    depends_on:
+      - database
+    env_file:
+      - .env
+    networks:
+      network_bun:
+        ipv4_address: 172.16.0.11
+
+  database:
+    image: postgres:14.18
+    container_name: container_postgresql
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpass
+      POSTGRES_DB: testdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    networks:
+      network_bun:
+        ipv4_address: 172.16.0.12
+
+  adminer:
+    image: adminer:5-standalone
+    container_name: container_adminer
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - database
+    networks:
+      network_bun:
+        ipv4_address: 172.16.0.13
+
+networks:
+  network_bun:
+    name: global_bun
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.0.0/24

@@ -1,0 +1,3 @@
+postgresql/
+node_modules/
+k6/*.html
