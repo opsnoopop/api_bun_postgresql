@@ -10,11 +10,15 @@ A simple Bun API application and PostgreSQL, containerized with Docker.
 - Bun: 1.2.18
 - pg: 8.11.3
 
-**PostgreSQL Container: FROM PostgreSQL:14.18**
+**PostgreSQL Container: FROM postgres:14.18**
 - OS Debian GNU/Linux 12 (bookworm): 12
 - PostgreSQL: 14.18
 
-**grafana/k6 Container: FROM grafana/k6:1.1.0**
+**Adminer Container: FROM adminer:5-standalone**
+- OS Alpine Linux: 3.22.1
+- Adminer: 5.3.0
+
+**Grafana/k6 Container: FROM grafana/k6:1.1.0**
 - OS Alpine Linux: 3.22.0
 - grafana/k6: 1.1.0
 
