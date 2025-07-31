@@ -1,6 +1,6 @@
-# Bun API with MySQL
+# Bun API with PostgreSQL
 
-A simple Bun API application and MySQL, containerized with Docker.
+A simple Bun API application and PostgreSQL, containerized with Docker.
 
 
 ## Technology Stack
