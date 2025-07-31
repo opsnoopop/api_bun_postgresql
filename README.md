@@ -27,12 +27,12 @@ A simple Bun API application and PostgreSQL, containerized with Docker.
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/opsnoopop/api_bun.git
+git clone https://github.com/opsnoopop/api_bun_postgresql.git
 ```
 
 ### 2. Navigate to Project Directory
 ```bash
-cd api_bun
+cd api_bun_postgresql
 ```
 
 ### 3. Start the Application
