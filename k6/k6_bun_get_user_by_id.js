@@ -10,9 +10,9 @@ export const options = {
   },
   // Ramp the number of virtual users up and down
   stages: [
-    { duration: "10s", target: 3000 },
-    { duration: "10s", target: 3000 },
-    { duration: "10s", target: 0 },
+    { duration: "10s", target: 10000 },
+    { duration: "10s", target: 10000 },
+    { duration: "10s", target: 10000 },
   ],
 };
 
@@ -35,6 +35,6 @@ export default function () {
 
 export function handleSummary(data) {
   return {
-    "/k6/result_bun_get_user_by_id.html": htmlReport(data),
+    "/k6/3_result_bun_get_user_by_id.html": htmlReport(data),
   };
 }
