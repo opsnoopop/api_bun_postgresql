@@ -177,7 +177,7 @@ sysbench \
 --pgsql-db="testdb" \
 --tables=10 \
 --table-size=100000 \
-oltp_read_write run;
+oltp_read_write run > sysbench_raw_$(date +"%Y%m%d_%H%M%S").txt
 ```
 
 ### sysbench step 3 cleanup
