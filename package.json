@@ -6,6 +6,6 @@
     "start": "bun index.ts"
   },
   "dependencies": {
-    "pg": "8.11.3"
+    "pg": "^8.16.3"
   }
 }

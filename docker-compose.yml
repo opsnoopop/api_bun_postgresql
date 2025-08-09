@@ -16,7 +16,7 @@ services:
         ipv4_address: 172.16.0.11
 
   database:
-    image: postgres:14.18
+    image: postgres:17.5
     container_name: container_postgresql
     restart: always
     shm_size: 128mb
