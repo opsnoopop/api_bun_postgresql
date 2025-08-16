@@ -1,5 +1,5 @@
-import postgres from "postgres";
 import { serve } from "bun";
+import postgres from "postgres";
 
 // postgres.js จะสร้าง pool ให้อัตโนมัติ
 const sql = postgres({
