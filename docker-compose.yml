@@ -19,7 +19,6 @@ services:
     image: postgres:17.5
     container_name: container_postgresql
     restart: always
-    shm_size: 128mb
     environment:
       POSTGRES_USER: testuser
       POSTGRES_PASSWORD: testpass
@@ -28,6 +27,7 @@ services:
       - "5432:5432"
     volumes:
       - ./postgresql:/var/lib/postgresql/data
+      - ./my-postgres.conf:/etc/postgresql/postgresql.conf
     networks:
       network_bun:
         ipv4_address: 172.16.0.12

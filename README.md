@@ -8,7 +8,7 @@ A simple Bun API application and PostgreSQL, containerized with Docker.
 **Bun Container: FROM oven/bun:1**
 - OS Alpine Linux 3.20.6
 - Bun: 1.2.18
-- PG: 8.11.3
+- postgres: 3.4.7 # bun add postgres
 
 **PostgreSQL Container: FROM postgres:17.5**
 - OS Debian GNU/Linux 12 (bookworm)
@@ -214,7 +214,7 @@ docker run \
 --network global_bun \
 -v ./k6/:/k6/ \
 grafana/k6:1.1.0 \
-run /k6/k6_bun_health_check.js
+run /k6/k6_health_check.js
 ```
 
 ### grafana/k6 test Insert Create user
@@ -226,7 +226,7 @@ docker run \
 --network global_bun \
 -v ./k6/:/k6/ \
 grafana/k6:1.1.0 \
-run /k6/k6_bun_create_user.js
+run /k6/k6_create_user.js
 ```
 
 ### grafana/k6 test Select Get user by id
@@ -238,7 +238,7 @@ docker run \
 --network global_bun \
 -v ./k6/:/k6/ \
 grafana/k6:1.1.0 \
-run /k6/k6_bun_get_user_by_id.js
+run /k6/k6_get_user_by_id.js
 ```
 
 ### check entrypoint grafana/k6

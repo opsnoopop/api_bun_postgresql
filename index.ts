@@ -1,15 +1,16 @@
-import { Pool } from "pg";
+import postgres from "postgres";
 import { serve } from "bun";
 
-const pool = new Pool({
+// postgres.js จะสร้าง pool ให้อัตโนมัติ
+const sql = postgres({
   host: process.env.DB_HOST,
-  user: process.env.DB_USER,
+  username: process.env.DB_USER,   // ใช้ `username` แทน `user`
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   port: Number(process.env.DB_PORT || 5432),
-  max: 10,              // จำนวน connection สูงสุด
-  idleTimeoutMillis: 60000,
-  connectionTimeoutMillis: 60000
+  max: 10,               // จำนวน connection สูงสุด
+  idle_timeout: 60,      // วินาที
+  connect_timeout: 60,   // วินาที
 });
 
 serve({
@@ -33,18 +34,22 @@ serve({
           });
         }
 
-        const result = await pool.query(
-          "INSERT INTO users (username, email) VALUES ($1, $2) RETURNING user_id",
-          [username, email]
-        );
+        const [user] = await sql`
+          INSERT INTO users (username, email)
+          VALUES (${username}, ${email})
+          RETURNING user_id
+        `;
 
-        return new Response(JSON.stringify({ message: "User created successfully", user_id: result.rows[0].user_id }), {
+        return new Response(JSON.stringify({ 
+          message: "User created successfully", 
+          user_id: user.user_id 
+        }), {
           status: 201,
           headers: { "Content-Type": "application/json" },
         });
 
       } catch (error) {
-        return new Response(JSON.stringify({ error: "Database error", detail: error.message }), {
+        return new Response(JSON.stringify({ error: "Database error", detail: String(error) }), {
           status: 500,
           headers: { "Content-Type": "application/json" },
         });
@@ -56,25 +61,26 @@ serve({
 
       if (intUserId && !isNaN(Number(intUserId))) {
         try {
-          const result = await pool.query(
-            "SELECT user_id, username, email FROM users WHERE user_id = $1",
-            [intUserId]
-          );
+          const [user] = await sql`
+            SELECT user_id, username, email
+            FROM users
+            WHERE user_id = ${intUserId}
+          `;
 
-          if (result.rows.length === 0) {
+          if (!user) {
             return new Response(JSON.stringify({ error: "User not found" }), {
               status: 404,
               headers: { "Content-Type": "application/json" },
             });
           }
 
-          return new Response(JSON.stringify(result.rows[0]), {
+          return new Response(JSON.stringify(user), {
             status: 200,
             headers: { "Content-Type": "application/json" },
           });
 
         } catch (error) {
-          return new Response(JSON.stringify({ error: "Database error", detail: error.message }), {
+          return new Response(JSON.stringify({ error: "Database error", detail: String(error) }), {
             status: 500,
             headers: { "Content-Type": "application/json" },
           });
