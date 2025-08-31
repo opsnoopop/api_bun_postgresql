@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS public.users (
 ## API Endpoints
 
 ### Health Check
-- **URL:** http://localhost:3001/
+- **URL:** http://localhost:3000/
 - **Method:** GET
 - **Response:**
 ```json
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS public.users (
 ```
 
 ### Create user
-- **URL:** http://localhost:3001/users
+- **URL:** http://localhost:3000/users
 - **Method:** POST
 - **Request**
 ```json
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS public.users (
 ```
 
 ### Get user
-- **URL:** http://localhost:3001/users/1
+- **URL:** http://localhost:3000/users/1
 - **Method:** GET
 - **Response:**
 ```json
@@ -214,7 +214,7 @@ docker run \
 --network global_bun \
 -v ./k6/:/k6/ \
 grafana/k6:1.1.0 \
-run /k6/k6_health_check.js
+run /k6/k6_1_ramping_health_check.js
 ```
 
 ### grafana/k6 test Insert Create user
@@ -226,7 +226,7 @@ docker run \
 --network global_bun \
 -v ./k6/:/k6/ \
 grafana/k6:1.1.0 \
-run /k6/k6_create_user.js
+run /k6/k6_2_ramping_create_user.js
 ```
 
 ### grafana/k6 test Select Get user by id
@@ -238,7 +238,7 @@ docker run \
 --network global_bun \
 -v ./k6/:/k6/ \
 grafana/k6:1.1.0 \
-run /k6/k6_get_user_by_id.js
+run /k6/k6_3_ramping_get_user_by_id.js
 ```
 
 ### check entrypoint grafana/k6
@@ -257,13 +257,13 @@ docker run \
 ### Truncate table users
 ```bash
 docker exec -i container_postgresql sh -c "PGPASSWORD='testpass' psql -U testuser -d testdb -c '
-Truncate testdb.users;"
+Truncate public.users RESTART IDENTITY;'"
 ```
 
 ### Delete table users
 ```bash
 docker exec -i container_postgresql sh -c "PGPASSWORD='testpass' psql -U testuser -d testdb -c '
-DELETE FROM testdb.users;"
+DELETE FROM public.users;'"
 ```
 
 ### Stop the Application
