@@ -7,7 +7,7 @@ services:
     container_name: container_bun
     restart: always
     ports:
-      - "3000:3000"
+      - "80:3000"
     depends_on:
       - database
     env_file:
@@ -28,6 +28,12 @@ services:
       - "5432:5432"
     volumes:
       - ./postgresql:/var/lib/postgresql/data
+      - ./postgresql_initdb:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U testuser -d testdb"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
     networks:
       network_bun:
         ipv4_address: 172.16.0.12
