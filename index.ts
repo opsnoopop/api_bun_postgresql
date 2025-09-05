@@ -20,7 +20,7 @@ serve({
     const pathname = url.pathname;
 
     if (req.method === "GET" && pathname === "/") {
-      return new Response(JSON.stringify({ message: "Hello World from Bun" }), {
+      return new Response(JSON.stringify({ message: "Hello World from Bun (PostgreSQL)" }), {
         headers: { "Content-Type": "application/json" },
       });
 
