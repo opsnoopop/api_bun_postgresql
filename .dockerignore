@@ -9,4 +9,6 @@ k6/
 node_modules/
 postgresql/
 postgresql_initdb/
-test*.sh
+sysbench/
+wrk/
+*.sh
